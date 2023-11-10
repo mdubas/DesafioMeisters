@@ -1,6 +1,7 @@
 package com.challenge.meisters.controller;
 
 import com.challenge.meisters.task.Task;
+import com.challenge.meisters.task.TaskRegistrationData;
 import com.challenge.meisters.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,15 +25,15 @@ public class TaskController {
         return taskRepository.findById(id).orElse(null);
     }
     @PostMapping
-    public void createTask(@RequestBody Task task) {
-        taskRepository.save(task);
+    public void createTask(@RequestBody TaskRegistrationData data) {
+        taskRepository.save(new Task(data));
     }
 
     @PutMapping("/{id}")
     public void updateTask(@PathVariable Long id, @RequestBody Task task) {
         if (taskRepository.existsById(id)) {
             task.setId(id);
-            taskRepository.save(task);
+            taskRepository.save(new Task());
         }
     }
 
